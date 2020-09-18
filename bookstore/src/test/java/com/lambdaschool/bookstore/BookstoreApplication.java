@@ -52,7 +52,7 @@ public class BookstoreApplication
         {
             // so run the application!
             SpringApplication.run(BookstoreApplication.class,
-                                  args);
+                    args);
         }
     }
 }

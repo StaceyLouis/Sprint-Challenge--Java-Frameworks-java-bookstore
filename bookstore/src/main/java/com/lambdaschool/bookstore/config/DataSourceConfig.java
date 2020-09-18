@@ -3,9 +3,9 @@ package com.lambdaschool.bookstore.config;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -15,38 +15,36 @@ import javax.sql.DataSource;
 @Configuration
 public class DataSourceConfig
 {
-    @Autowired
-    private ApplicationContext appContext;
-
-    @Autowired
-    private Environment env;
-
-    @Value("${local.run.db:H2}")
-    String h2Url;
+    @Value("${local.run.db:h2}")
+    private String dbValue;
 
     @Value("${spring.datasource.url:}")
-    private String dbUrl;
+    private String dbURL;
 
     @Bean
     public DataSource dataSource()
     {
-        String dbValue = env.getProperty("local.run.db");
-
         if (dbValue.equalsIgnoreCase("POSTGRESQL"))
         {
+            // Assume Heroku
             HikariConfig config = new HikariConfig();
             config.setDriverClassName("org.postgresql.Driver");
-            config.setJdbcUrl(dbUrl);
+            config.setJdbcUrl(dbURL);
             return new HikariDataSource(config);
         } else
         {
+            // Assume H2
+            String myURLString = "jdbc:h2:mem:testdb";
+            String myDriverClass = "org.h2.Driver";
+            String myDBUser = "sa";
+            String myDBPassword = "";
+
             return DataSourceBuilder.create()
-                    .username("sa")
-                    .password("")
-                    .url(h2Url)
-                    .driverClassName("org.h2.Driver")
+                    .username(myDBUser)
+                    .password(myDBPassword)
+                    .url(myURLString)
+                    .driverClassName(myDriverClass)
                     .build();
         }
-
     }
 }
