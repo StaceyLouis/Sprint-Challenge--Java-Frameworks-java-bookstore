@@ -49,10 +49,14 @@ Commit your code regularly and meaningfully. This helps both you (in case you ev
 
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
 
-1. Can you explain exception handling in your application?
+
+1. Can you explain exception handling in your application? 
+  exceptions thrown in my application will have a custom lambda response alerting details of error.
 2. Can you explain your user authentication flow?
+first make sure that the environnment variables are set. this will allow the client to be authorized access to the application. Then we set the config files for the auth. using the client id and password, we can then request an access token
 3. Can you show me your unit tests and describe how they work?
-4. Can you show how you deployed your application to a cloud service with a persistent database?
+ Book Service and controllers tests test findALL, findbooksByID that passes and fails, delete , save a book,listAllBooks
+    getBookById that succeeds and fails ,addNewBook, deleteBookById
 
 ## Instructions
 
